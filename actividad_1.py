@@ -13,6 +13,7 @@ with open("log.txt", "w") as log_file:
         start_time_file = time.time()
         with open(os.path.join(folder, file_name), "rb") as html_file:
             html_file.read()
+        html_file.close()
         end_time = time.time()
         read_time = end_time - start_time_file
 
