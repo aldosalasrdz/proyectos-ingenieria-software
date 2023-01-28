@@ -1,3 +1,4 @@
+"""Actividad 1. Arranque del proyecto y verificación de archivos HTML"""
 import os
 import time
 
