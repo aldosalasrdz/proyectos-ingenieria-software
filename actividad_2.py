@@ -18,7 +18,7 @@ with open("log2.txt", "w") as log_file:
         start_time_file = time.time()
         with open(os.path.join(folder, file_name), "rb") as html_file:
             html = html_file.read()
-            # Check more information about unicodes: https://www.crummy.com/software/BeautifulSoup/bs4/doc/#encodings
+            # Check more information about encoding: https://www.crummy.com/software/BeautifulSoup/bs4/doc/#encodings
             soup = BeautifulSoup(html, "html.parser", from_encoding="iso-8859-1")
             content = soup.get_text()
             # Remove blank lines and ^M character
