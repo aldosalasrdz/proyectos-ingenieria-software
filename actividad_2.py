@@ -33,7 +33,7 @@ with open("log2.txt", "w") as log_file:
             new_file_path = os.path.join(new_folder, new_file_name)
             with open(new_file_path, "w") as new_file:
                 new_file.write(content)
-                new_file.close()
+            new_file.close()
         html_file.close()
         end_time = time.time()
         read_time = end_time - start_time_file
@@ -45,6 +45,6 @@ with open("log2.txt", "w") as log_file:
         remove_html_tags(file_name)
     total_time = time.time() - start_time
     total_execution_time = time.time() - start_execution_time
-    log_file.write(f"Tiempo total en abrir los archivos: {total_time}\n")
+    log_file.write(f"\nTiempo total en abrir los archivos: {total_time}\n")
     log_file.write(f"Tiempo total de ejecucion: {total_execution_time}\n")
 log_file.close()

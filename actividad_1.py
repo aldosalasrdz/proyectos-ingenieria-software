@@ -26,6 +26,6 @@ with open("log.txt", "w") as log_file:
         open_file(file_name)
     total_time = time.time() - start_time
     total_execution_time = time.time() - start_execution_time
-    log_file.write(f"Tiempo total en abrir los archivos: {total_time}\n")
+    log_file.write(f"\nTiempo total en abrir los archivos: {total_time}\n")
     log_file.write(f"Tiempo total de ejecucion: {total_execution_time}\n")
 log_file.close()
