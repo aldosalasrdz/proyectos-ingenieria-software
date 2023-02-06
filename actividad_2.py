@@ -1,7 +1,7 @@
 """Actividad 2. Remover las etiquetas HTML"""
 import os
 import time
-from bs4 import BeautifulSoup
+import re
 
 folder = "Files"
 new_folder = "NewFiles"
@@ -15,20 +15,17 @@ start_execution_time = time.time()
 with open("log2.txt", "w") as log_file:
     start_time = time.time()
 
-    def remove_html_tags(file_name):
+    def remove_html_tags(file_name: str) -> None:
         start_time_file = time.time()
         with open(os.path.join(folder, file_name), "rb") as html_file:
-            html = html_file.read()
-            # Check more information about encoding: https://www.crummy.com/software/BeautifulSoup/bs4/doc/#encodings
-            soup = BeautifulSoup(html, "html.parser",
-                                 from_encoding="iso-8859-1")
-            content = soup.get_text()
-            # Remove blank lines and ^M character
+            html = html_file.read().decode("ISO-8859-1")
+            # Regular expression to remove HTML tags and HTML entities.
+            # More information about HTML entities:
+            # https://html.spec.whatwg.org/multipage/named-characters.html#named-character-references
+            content = re.sub(r"<[^>]*>|&.*?;", "", html)
             content = content.replace("\r", "")
             content = "\n".join(
                 [line for line in content.split("\n") if line.strip()])
-            # Whitout removing the blank lines
-            # content = soup.get_text()
             new_file_name = file_name.replace(".html", ".txt")
             new_file_path = os.path.join(new_folder, new_file_name)
             with open(new_file_path, "w") as new_file:
