@@ -11,7 +11,7 @@ start_execution_time = time.time()
 with open("log3.txt", "w") as log_file:
     start_time = time.time()
 
-    def save_words(file_name):
+    def save_words(file_name: str) -> list[str]:
         start_time_read = time.time()
 
         words = []
