@@ -11,7 +11,7 @@ start_execution_time = time.time()
 with open("log.txt", "w") as log_file:
     start_time = time.time()
 
-    def open_file(file_name):
+    def open_file(file_name: str) -> None:
         start_time_file = time.time()
         with open(os.path.join(folder, file_name), "rb") as html_file:
             html_file.read()
