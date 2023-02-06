@@ -14,7 +14,7 @@ with open("log3.txt", "w") as log_file:
     def save_words(file_name: str) -> list[str]:
         start_time_read = time.time()
 
-        words = []
+        words: list[str] = []
 
         with open(os.path.join(folder, file_name), "r") as text_file:
             content = text_file.read().lower()
@@ -28,7 +28,7 @@ with open("log3.txt", "w") as log_file:
 
         return words
 
-    all_words = []
+    all_words: list[str] = []
     for file_name in os.listdir(folder):
         all_words += save_words(file_name)
 
