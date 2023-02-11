@@ -28,7 +28,7 @@ with open("log2.txt", "w") as log_file:
                 [line for line in content.split("\n") if line.strip()])
             new_file_name = file_name.replace(".html", ".txt")
             new_file_path = os.path.join(new_folder, new_file_name)
-            with open(new_file_path, "w") as new_file:
+            with open(new_file_path, "w", encoding="utf-8") as new_file:
                 new_file.write(content)
             new_file.close()
         html_file.close()
