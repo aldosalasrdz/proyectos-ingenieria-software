@@ -24,8 +24,7 @@ with open("log2.txt", "w") as log_file:
             # https://html.spec.whatwg.org/multipage/named-characters.html#named-character-references
             content = re.sub(r"<[^>]*>|&.*?;", "", html)
             content = content.replace("\r", "")
-            content = "\n".join(
-                [line for line in content.split("\n") if line.strip()])
+            content = "\n".join([line for line in content.split("\n") if line.strip()])
             new_file_name = file_name.replace(".html", ".txt")
             new_file_path = os.path.join(new_folder, new_file_name)
             with open(new_file_path, "w", encoding="utf-8") as new_file:
@@ -35,8 +34,7 @@ with open("log2.txt", "w") as log_file:
         end_time = time.time()
         read_time = end_time - start_time_file
 
-        log_file.write(
-            f"{os.path.join(absolute_path, file_name)}: {read_time}\n")
+        log_file.write(f"{os.path.join(absolute_path, file_name)}: {read_time}\n")
 
     for file_name in os.listdir(folder):
         remove_html_tags(file_name)

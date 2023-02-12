@@ -19,8 +19,7 @@ with open("log.txt", "w") as log_file:
         end_time = time.time()
         read_time = end_time - start_time_file
 
-        log_file.write(
-            f"{os.path.join(absolute_path, file_name)}: {read_time}\n")
+        log_file.write(f"{os.path.join(absolute_path, file_name)}: {read_time}\n")
 
     for file_name in os.listdir(folder):
         open_file(file_name)

@@ -23,8 +23,7 @@ with open("log3.txt", "w") as log_file:
 
         end_time_read = time.time()
         read_time = end_time_read - start_time_read
-        log_file.write(
-            f"{os.path.join(absolute_path, file_name)}: {read_time}\n")
+        log_file.write(f"{os.path.join(absolute_path, file_name)}: {read_time}\n")
 
         return words
 
