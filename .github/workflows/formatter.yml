@@ -18,7 +18,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install black
-      - name: Formatting the code black
+      - name: Formatting the code with black
         run: |
           black --verbose .
       - name: Commit changes
