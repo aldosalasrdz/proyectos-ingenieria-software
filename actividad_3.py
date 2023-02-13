@@ -32,8 +32,7 @@ with open("log3.txt", "w") as log_file:
         all_words += save_words(file_name)
 
     all_words = sorted(all_words)
-    # Obtain unique words
-    # all_words = sorted(set(all_words))
+
     with open("all_words.txt", "w", encoding="utf-8") as all_words_file:
         all_words_file.write("\n".join(all_words))
     all_words_file.close()
