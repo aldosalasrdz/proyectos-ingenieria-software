@@ -46,7 +46,7 @@ with open("log6.txt", "w") as log_file:
                 all_words_dict[word] = count
 
     with open("tokenized.txt", "w", encoding="utf-8") as tokenized_words_file:
-        for word, data in all_words_dict.items():
+        for word, data in sorted(all_words_dict.items()):
             tokenized_words_file.write(f"{word};{data['count']};{len(data['files'])}\n")
     tokenized_words_file.close()
 
