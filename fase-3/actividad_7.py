@@ -6,7 +6,6 @@ import re
 folder = "NewFiles"
 absolute_path = os.path.abspath(folder)
 
-
 start_execution_time = time.time()
 
 with open("log7.txt", "w") as log_file:
