@@ -6,6 +6,7 @@ import re
 folder = "NewFiles"
 absolute_path = os.path.abspath(folder)
 
+
 start_execution_time = time.time()
 
 with open("log7.txt", "w") as log_file:
@@ -35,6 +36,7 @@ with open("log7.txt", "w") as log_file:
         with open("posting.txt", "a") as posting_file:
             for word in words_dict:
                 posting_file.write(f"{file_name};{words_dict[word]['count']}\n")
+
         return words_dict
 
     all_words_dict = {}
