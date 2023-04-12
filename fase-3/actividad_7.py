@@ -39,6 +39,7 @@ with open("log7.txt", "w") as log_file:
 
         return all_words_dict
 
+    all_words_dict = {}
     for file_name in os.listdir(folder):
         all_words_dict = dictionary_words(file_name)
 
