@@ -2,90 +2,73 @@
 import PyPDF2
 import time
 
-#Inicio de tiempo de ejecucion
 start_execution_time = time.time()
-#Se abre el log de la act8
 with open("log9.txt", "w") as log_file:
-    log_file.write("#Punto 3:\n")
-    start_Punto3_time = time.time()
-    #Punto 3. Leer el pdf
-    #Metodo para saber si en el diccionario existe una palabra como llave
-    def existsDic(word, Dic):
-        if Dic.get(word) is not None:
-            return True
-        else:
-            return False
+    start_punto3_time = time.time()
 
-    #Se abre el archivo stopList
-    with open("stopList.txt", "w") as stopListFile:
+    def exists_dict(word, dict):
+        return dict.get(word) is not None
 
-        #Se lee el pdf
+    with open("stop_list.txt", "w") as stop_list_file:
         file = open("Actividad9_stoplist.pdf", "rb")
         readPDF = PyPDF2.PdfReader(file)
 
-        #Se extrae el texto del pdf y se excribe en stopList.txt
-        for i in range(0,11):
+        for i in range(0, 11):
             page = readPDF._get_page(i)
-            stopListFile.write(page.extract_text())
-        stopListFile.close()
+            stop_list_file.write(page.extract_text())
+        stop_list_file.close()
 
-    #Se crea el nuevo diccionario
-    newDic = {}
+    new_dict = {}
 
-    #Se lee el archivo del diccionario
     with open("dictionary.txt", "r") as dictionary:
-        
-        #Se lee por lineas
-        Lines = dictionary.readlines()
-        
-        #Por cada linea se agrega al nuevo diccionario
-        for line in Lines:
+        lines = dictionary.readlines()
+
+        for line in lines:
             line = line[:-1]
-            #Se divide la linea por ;
             row = line.split(";")
-            #Se agrega la palabra + rep + pos al diccionario nuevo
-            newDic[row[0]] = {"Rep": row[1], "Pos": row[2]}
+            new_dict[row[0]] = {"Rep": row[1], "Pos": row[2]}
 
-    #Se leen las lineas de StopList
-    stopList = open('stopList.txt', 'r')
-    stopLines = stopList.readlines()
+    stop_list = open("stop_list.txt", "r")
+    stop_lines = stop_list.readlines()
 
-    #Punto 3: Eliminar las palabras dentro de stopList
-    for line in stopLines:
-        start_SL_time = time.time()
-        #Se limpia la palabra para que no tenga saltos de linea ni espacios
+    for line in stop_lines:
+        start_sl_time = time.time()
         word = line.split()[0]
-        #Si la palabra de stopList existe en el diccionario se elimina
-        if existsDic(word, newDic):
-            del newDic[word]
-        end_SL_time = time.time()
-        log_file.write("Palabra: "+word+"\t"+str(end_SL_time-start_SL_time)+"\n")
-    end_Punto3_time = time.time()
-    log_file.write("Tiempo de Ejecucion punto 3:\t"+str(end_Punto3_time-start_Punto3_time)+"\n")
+        if exists_dict(word, new_dict):
+            del new_dict[word]
+        end_sl_time = time.time()
+        log_file.write(
+            "Palabra: " + word + "\t" + str(end_sl_time - start_sl_time) + "\n"
+        )
+    end_punto3_time = time.time()
+    log_file.write(
+        f"Tiempo de ejecución punto 3:\t{end_punto3_time - start_punto3_time}\n"
+    )
 
-    #Punto 4.a: Eliminar tokens con repeticiones bajas
-    #Punto 4.b: Eliminar tokens con 1 solo caracter
-    log_file.write("\n#Punto 4:\n")
-    start_Punto4_time = time.time()
-    #Se guardan las palabras del diccionario en una lista
+    start_punto4_time = time.time()
     wordList = []
-    for element in newDic:
+    for element in new_dict:
         wordList.append(element)
 
-    #Se elimina del diccionario las palabras de 1 caracter y las que se repiten menos de 3 veces
     for element in wordList:
-        start_ND_time = time.time()
-        if len(element) == 1 or int(newDic[element]["Rep"]) <= 3:
-            del newDic[element]
+        start_nd_time = time.time()
+        if len(element) == 1 or int(new_dict[element]["Rep"]) <= 3:
+            del new_dict[element]
         end_ND_time = time.time()
-        log_file.write("Palabra: "+element+"\t"+str(end_ND_time-start_ND_time)+"\n")
-    
+        log_file.write(f"Palabra: {element}\t{end_ND_time - start_nd_time}\n")
+
     with open("newDictionary.txt", "w") as NewDictionary:
-        for element in newDic:
-            NewDictionary.write(element+";"+newDic[element]["Rep"]+";"+newDic[element]["Pos"]+"\n")
-    
-    end_Punto4_time = time.time()
-    log_file.write("\nTiempo de Ejecucion punto 4:\t"+str(end_Punto4_time-start_Punto4_time)+"\n")
+        for element in new_dict:
+            NewDictionary.write(
+                f"{element};{new_dict[element]['Rep']};{new_dict[element]['Pos']}\n"
+            )
+
+    end_punto4_time = time.time()
+    log_file.write(
+        f"\nTiempo de ejecución punto 4:\t{end_punto4_time - start_punto4_time}\n"
+    )
     end_execution_time = time.time()
-    log_file.write("\nTiempo de Ejecucion Total:\t"+str(end_execution_time-start_execution_time))
+    log_file.write(
+        f"\nTiempo de ejecución total:\t{end_execution_time - start_execution_time}"
+    )
 log_file.close()
