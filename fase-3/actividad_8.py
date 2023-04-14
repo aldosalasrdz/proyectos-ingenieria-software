@@ -12,7 +12,7 @@ start_execution_time = time.time()
 with open("log8.txt", "w") as log_file:
     start_time = time.time()
 
-    hash_table = HashTable()
+    hash_table = HashTable(250_000)
 
     def hash_table_words(file_name: str):
         start_time_read = time.time()
@@ -45,7 +45,7 @@ with open("log8.txt", "w") as log_file:
                     )
                     word_count += count
         hash_table_file.write(
-            f"\nNumero total de colisiones: {hash_table.count_collisions()}\n"
+            f"\nNumero total de colisiones: {hash_table.count_collisions()}"
         )
 
     total_time = time.time() - start_time
