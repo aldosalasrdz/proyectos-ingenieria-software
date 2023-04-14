@@ -1,6 +1,6 @@
 class HashTable:
-    def __init__(self):
-        self.size = 250_000
+    def __init__(self, size):
+        self.size = size
         self.table = [[] for _ in range(self.size)]
 
     def hash_function(self, key):
