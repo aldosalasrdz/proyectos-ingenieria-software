@@ -1,10 +1,16 @@
 """Actividad 9. Stop List"""
 import PyPDF2
 import time
+import os
+from hash_table import HashTable
+
+folder = "NewFiles"
+absolute_path = os.path.abspath(folder)
 
 start_execution_time = time.time()
 with open("log9.txt", "w") as log_file:
     start_punto3_time = time.time()
+    hash_table = HashTable(20)
 
     def exists_dict(word, dict):
         return dict.get(word) is not None
@@ -37,9 +43,7 @@ with open("log9.txt", "w") as log_file:
         if exists_dict(word, new_dict):
             del new_dict[word]
         end_sl_time = time.time()
-        log_file.write(
-            "Palabra: " + word + "\t" + str(end_sl_time - start_sl_time) + "\n"
-        )
+        log_file.write(f"Palabra: {word}\t{end_sl_time - start_sl_time}\n")
     end_punto3_time = time.time()
     log_file.write(
         f"Tiempo de ejecución punto 3:\t{end_punto3_time - start_punto3_time}\n"
@@ -56,6 +60,32 @@ with open("log9.txt", "w") as log_file:
             del new_dict[element]
         end_ND_time = time.time()
         log_file.write(f"Palabra: {element}\t{end_ND_time - start_nd_time}\n")
+    end_punto4_time = time.time()
+    log_file.write(
+        f"\nTiempo de ejecución punto 4:\t{end_punto4_time - start_punto4_time}\n"
+    )
+    start_punto5_time = time.time()
+
+    def hash_table_words():
+        for word in new_dict:
+            hash_table.add(word, 1)
+
+    hash_table_words()
+
+    word_count = 0
+    with open("newHashTable.txt", "w", encoding="utf-8") as hash_table_file:
+        for i in range(len(hash_table.table)):
+            if not hash_table.table[i]:
+                hash_table_file.write("0\n")
+            else:
+                for word, count in hash_table.table[i]:
+                    hash_table_file.write(
+                        f"{word}{' ' * (8 - len(word))}\t{count}\t\t{word_count}\n"
+                    )
+                    word_count += count
+        hash_table_file.write(
+            f"\nNumero total de colisiones: {hash_table.count_collisions()}\n"
+        )
 
     with open("newDictionary.txt", "w") as NewDictionary:
         for element in new_dict:
@@ -63,9 +93,9 @@ with open("log9.txt", "w") as log_file:
                 f"{element};{new_dict[element]['Rep']};{new_dict[element]['Pos']}\n"
             )
 
-    end_punto4_time = time.time()
+    end_punto5_time = time.time()
     log_file.write(
-        f"\nTiempo de ejecución punto 4:\t{end_punto4_time - start_punto4_time}\n"
+        f"\nTiempo de ejecución punto 5:\t{end_punto5_time - start_punto5_time}\n"
     )
     end_execution_time = time.time()
     log_file.write(
