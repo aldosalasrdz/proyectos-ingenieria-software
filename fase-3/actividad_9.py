@@ -2,103 +2,88 @@
 import PyPDF2
 import time
 import os
+import re
 from hash_table import HashTable
 
 folder = "NewFiles"
 absolute_path = os.path.abspath(folder)
 
 start_execution_time = time.time()
+
 with open("log9.txt", "w") as log_file:
-    start_punto3_time = time.time()
-    hash_table = HashTable(20)
+    start_time = time.time()
 
-    def exists_dict(word, dict):
-        return dict.get(word) is not None
+    hash_table = HashTable(50_000)
 
-    with open("stop_list.txt", "w") as stop_list_file:
-        file = open("Actividad9_stoplist.pdf", "rb")
-        readPDF = PyPDF2.PdfReader(file)
+    with open("Actividad9_stoplist.pdf", "rb") as stoplist_file:
+        reader = PyPDF2.PdfReader(stoplist_file)
+        stoplist = ""
 
-        for i in range(0, 11):
-            page = readPDF._get_page(i)
-            stop_list_file.write(page.extract_text())
-        stop_list_file.close()
+        for page in reader.pages:
+            stoplist += page.extract_text()
 
-    new_dict = {}
+        # Remove everything but the words
+        stoplist = set(re.findall(r"(?!.*TecMilenio).*\b[a-zA-Z]+\b", stoplist))
 
-    with open("dictionary.txt", "r") as dictionary:
-        lines = dictionary.readlines()
+        with open("stoplist.txt", "w") as stoplist_file:
+            stoplist_file.write("\n".join(stoplist))
 
-        for line in lines:
-            line = line[:-1]
-            row = line.split(";")
-            new_dict[row[0]] = {"Rep": row[1], "Pos": row[2]}
+    def stop_list_words(file_name: str):
+        start_time_read = time.time()
 
-    stop_list = open("stop_list.txt", "r")
-    stop_lines = stop_list.readlines()
+        with open(os.path.join(folder, file_name), "r") as text_file:
+            content = text_file.read().lower()
+            words = re.findall(r"\b[a-zA-Z]+\b", content)
 
-    for line in stop_lines:
-        start_sl_time = time.time()
-        word = line.split()[0]
-        if exists_dict(word, new_dict):
-            del new_dict[word]
-        end_sl_time = time.time()
-        log_file.write(f"Palabra: {word}\t{end_sl_time - start_sl_time}\n")
-    end_punto3_time = time.time()
-    log_file.write(
-        f"Tiempo de ejecución punto 3:\t{end_punto3_time - start_punto3_time}\n"
-    )
+            # Remove stoplist words
+            words = [word for word in words if word not in stoplist]
 
-    start_punto4_time = time.time()
-    wordList = []
-    for element in new_dict:
-        wordList.append(element)
+            for word in words:
+                hash_table.add(word, 1)
 
-    for element in wordList:
-        start_nd_time = time.time()
-        if len(element) == 1 or int(new_dict[element]["Rep"]) <= 3:
-            del new_dict[element]
-        end_ND_time = time.time()
-        log_file.write(f"Palabra: {element}\t{end_ND_time - start_nd_time}\n")
-    end_punto4_time = time.time()
-    log_file.write(
-        f"\nTiempo de ejecución punto 4:\t{end_punto4_time - start_punto4_time}\n"
-    )
-    start_punto5_time = time.time()
+        text_file.close()
 
-    def hash_table_words():
-        for word in new_dict:
-            hash_table.add(word, 1)
+        end_time_read = time.time()
+        read_time = end_time_read - start_time_read
+        log_file.write(f"{os.path.join(absolute_path, file_name)}: {read_time}\n")
 
-    hash_table_words()
+    for file_name in os.listdir(folder):
+        stop_list_words(file_name)
+
+    # Remove words that appear less than 3 times
+    for i in range(len(hash_table.table)):
+        if hash_table.table[i]:
+            hash_table.table[i] = [
+                (word, count) for word, count in hash_table.table[i] if count >= 3
+            ]
+
+    # Remove words of length 1
+    for i in range(len(hash_table.table)):
+        if hash_table.table[i]:
+            hash_table.table[i] = [
+                (word, count) for word, count in hash_table.table[i] if len(word) > 1
+            ]
 
     word_count = 0
+    MAX_WORD_LENGTH = 26
+    MAX_COUNT_LENGTH = 3
     with open("newHashTable.txt", "w", encoding="utf-8") as hash_table_file:
         for i in range(len(hash_table.table)):
             if not hash_table.table[i]:
                 hash_table_file.write("0\n")
             else:
                 for word, count in hash_table.table[i]:
-                    hash_table_file.write(
-                        f"{word}{' ' * (8 - len(word))}\t{count}\t\t{word_count}\n"
-                    )
+                    word_count_str = str(word_count)
+                    count_str = str(count).ljust(MAX_COUNT_LENGTH + 2)
+                    word_str = str(word).ljust(MAX_WORD_LENGTH + 2)
+                    hash_table_file.write(f"{word_str}{count_str}{word_count_str}\n")
                     word_count += count
         hash_table_file.write(
-            f"\nNumero total de colisiones: {hash_table.count_collisions()}\n"
+            f"\nNumero total de colisiones: {hash_table.count_collisions()}"
         )
 
-    with open("newDictionary.txt", "w") as NewDictionary:
-        for element in new_dict:
-            NewDictionary.write(
-                f"{element};{new_dict[element]['Rep']};{new_dict[element]['Pos']}\n"
-            )
+    total_time = time.time() - start_time
+    total_execution_time = time.time() - start_execution_time
 
-    end_punto5_time = time.time()
-    log_file.write(
-        f"\nTiempo de ejecución punto 5:\t{end_punto5_time - start_punto5_time}\n"
-    )
-    end_execution_time = time.time()
-    log_file.write(
-        f"\nTiempo de ejecución total:\t{end_execution_time - start_execution_time}"
-    )
-log_file.close()
+    log_file.write(f"\nTiempo total en abrir los archivos: {total_time}\n")
+    log_file.write(f"Tiempo total de ejecucion: {total_execution_time}\n")
