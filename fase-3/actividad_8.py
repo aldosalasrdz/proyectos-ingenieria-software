@@ -34,15 +34,18 @@ with open("log8.txt", "w") as log_file:
         hash_table_words(file_name)
 
     word_count = 0
+    MAX_WORD_LENGTH = 60
+    MAX_COUNT_LENGTH = 3
     with open("hashtable.txt", "w", encoding="utf-8") as hash_table_file:
         for i in range(len(hash_table.table)):
             if not hash_table.table[i]:
                 hash_table_file.write("0\n")
             else:
                 for word, count in hash_table.table[i]:
-                    hash_table_file.write(
-                        f"{word}{' ' * (60 - len(word))}\t{count}\t\t{word_count}\n"
-                    )
+                    word_count_str = str(word_count)
+                    count_str = str(count).ljust(MAX_COUNT_LENGTH + 2)
+                    word_str = str(word).ljust(MAX_WORD_LENGTH + 2)
+                    hash_table_file.write(f"{word_str}{count_str}{word_count_str}\n")
                     word_count += count
         hash_table_file.write(
             f"\nNumero total de colisiones: {hash_table.count_collisions()}"
