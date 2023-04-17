@@ -35,7 +35,7 @@ with open("log8.txt", "w") as log_file:
 
     word_count = 0
     MAX_WORD_LENGTH = 60
-    MAX_COUNT_LENGTH = 3
+    MAX_COUNT_LENGTH = 5
     with open("hashtable.txt", "w", encoding="utf-8") as hash_table_file:
         for i in range(len(hash_table.table)):
             if not hash_table.table[i]:
