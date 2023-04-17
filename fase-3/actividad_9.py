@@ -67,23 +67,32 @@ with open("log9.txt", "w") as log_file:
                 (word, count) for word, count in hash_table.table[i] if len(word) > 1
             ]
 
-    word_count = 0
     MAX_WORD_LENGTH = 26
-    MAX_COUNT_LENGTH = 3
+    MAX_COUNT_LENGTH = 5
+
     with open("newHashTable.txt", "w", encoding="utf-8") as hash_table_file:
+        hash_word_count = 0
         for i in range(len(hash_table.table)):
             if not hash_table.table[i]:
                 hash_table_file.write("0\n")
             else:
                 for word, count in hash_table.table[i]:
-                    word_count_str = str(word_count)
+                    word_count_str = str(hash_word_count)
                     count_str = str(count).ljust(MAX_COUNT_LENGTH + 2)
                     word_str = str(word).ljust(MAX_WORD_LENGTH + 2)
                     hash_table_file.write(f"{word_str}{count_str}{word_count_str}\n")
-                    word_count += count
+                    hash_word_count += count
         hash_table_file.write(
             f"\nNumero total de colisiones: {hash_table.count_collisions()}"
         )
+
+    with open("newDictionary.txt", "w", encoding="utf-8") as new_dictionary_file:
+        dict_word_count = 0
+        for i in range(len(hash_table.table)):
+            if hash_table.table[i]:
+                for j, (word, count) in enumerate(hash_table.table[i]):
+                    new_dictionary_file.write(f"{word};{count};{dict_word_count}\n")
+                    dict_word_count += count
 
     total_time = time.time() - start_time
     total_execution_time = time.time() - start_execution_time
