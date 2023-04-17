@@ -25,8 +25,11 @@ with open("log9.txt", "w") as log_file:
         # Remove everything but the words
         stoplist = set(re.findall(r"(?!.*TecMilenio).*\b[a-zA-Z]+\b", stoplist))
 
+        # Remove white spaces in each word
+        stoplist = [word.strip() for word in stoplist]
+
         with open("stoplist.txt", "w") as stoplist_file:
-            stoplist_file.write("\n".join(stoplist))
+            stoplist_file.write("\n".join(sorted(stoplist)))
 
     def stop_list_words(file_name: str):
         start_time_read = time.time()
