@@ -90,7 +90,7 @@ with open("log9.txt", "w") as log_file:
         dict_word_count = 0
         for i in range(len(hash_table.table)):
             if hash_table.table[i]:
-                for j, (word, count) in enumerate(hash_table.table[i]):
+                for word, count in hash_table.table[i]:
                     new_dictionary_file.write(f"{word};{count};{dict_word_count}\n")
                     dict_word_count += count
 
