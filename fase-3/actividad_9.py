@@ -15,6 +15,8 @@ with open("log9.txt", "w") as log_file:
 
     hash_table = HashTable(50_000)
 
+    file_count = {}
+
     with open("Actividad9_stoplist.pdf", "rb") as stoplist_file:
         reader = PyPDF2.PdfReader(stoplist_file)
         stoplist = ""
@@ -44,6 +46,11 @@ with open("log9.txt", "w") as log_file:
             for word in words:
                 hash_table.add(word, 1)
 
+                if word not in file_count:
+                    file_count[word] = set()
+
+                file_count[word].add(file_name)
+
         text_file.close()
 
         end_time_read = time.time()
@@ -57,7 +64,9 @@ with open("log9.txt", "w") as log_file:
     for i in range(len(hash_table.table)):
         if hash_table.table[i]:
             hash_table.table[i] = [
-                (word, count) for word, count in hash_table.table[i] if count >= 3
+                (word, count)
+                for word, count in hash_table.table[i]
+                if len(file_count[word]) >= 3
             ]
 
     # Remove words of length 1
@@ -78,7 +87,7 @@ with open("log9.txt", "w") as log_file:
             else:
                 for word, count in hash_table.table[i]:
                     word_count_str = str(hash_word_count)
-                    count_str = str(count).ljust(MAX_COUNT_LENGTH + 2)
+                    count_str = str(len(file_count[word])).ljust(MAX_COUNT_LENGTH + 2)
                     word_str = str(word).ljust(MAX_WORD_LENGTH + 2)
                     hash_table_file.write(f"{word_str}{count_str}{word_count_str}\n")
                     hash_word_count += count
@@ -91,7 +100,9 @@ with open("log9.txt", "w") as log_file:
         for i in range(len(hash_table.table)):
             if hash_table.table[i]:
                 for word, count in hash_table.table[i]:
-                    new_dictionary_file.write(f"{word};{count};{dict_word_count}\n")
+                    new_dictionary_file.write(
+                        f"{word};{len(file_count[word])};{dict_word_count}\n"
+                    )
                     dict_word_count += count
 
     total_time = time.time() - start_time

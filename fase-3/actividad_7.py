@@ -51,7 +51,7 @@ with open("log7.txt", "w") as log_file:
     with open("dictionary.txt", "w", encoding="utf-8") as dictionary_file:
         word_count = 0
         for word, data in all_words_dict.items():
-            dictionary_file.write(f"{word};{data['count']};{word_count}\n")
+            dictionary_file.write(f"{word};{len(data['files'])};{word_count}\n")
             word_count += data["count"]
     dictionary_file.close()
 
