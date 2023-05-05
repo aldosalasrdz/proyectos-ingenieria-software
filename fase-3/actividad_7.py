@@ -20,7 +20,6 @@ with open("log7.txt", "w") as log_file:
         with open(os.path.join(folder, file_name), "r") as text_file:
             # Se lee el contenido del archivo en minusculas
             content = text_file.read().lower()
-            # print(content)
             # Se sacan las palabras
             words = re.findall(r"\b[a-zA-Z]+\b", content)
             # Por cada palabra
@@ -28,7 +27,6 @@ with open("log7.txt", "w") as log_file:
                 # Si la palabra ya existe dentro del diccionario
                 if word in words_dict:
                     # Se le suma una repeticion
-                    # print(words_dict[word])
                     words_dict[word]["RepDic"][file_name] += 1
                     # Si el archivo no esta en el arreglo dentro del
                     # diccionario de la palabra
@@ -58,8 +56,6 @@ with open("log7.txt", "w") as log_file:
     all_words_dict = {}
     # Por cada archivo txt
     for file_name in os.listdir(folder):
-        # print(file_name)
-
         # Aqui se le meten las cosas al all_words_dict
         file_words = dictionary_words(file_name)
 
@@ -80,7 +76,6 @@ with open("log7.txt", "w") as log_file:
     with open("posting.txt", "w") as posting_file:
         # Por cada palabra en el diccionario
         for word in all_words_dict:
-            # print(all_words_dict[word])
             for file in all_words_dict[word]["files"]:
                 posting_file.write(f"{file};{all_words_dict[word]['RepDic'][file]}\n")
 
