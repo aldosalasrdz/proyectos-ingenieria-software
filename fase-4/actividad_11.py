@@ -38,7 +38,7 @@ with open("log11.txt", "w") as log_file:
         Pos.close()
 
     # Se actualiza el Posting
-    with open("newPostingAct11.txt", "w") as PosW:
+    with open("newPosting.txt", "w") as PosW:
         for line in PosLines:
             docNumber = line.split(".txt")
 
