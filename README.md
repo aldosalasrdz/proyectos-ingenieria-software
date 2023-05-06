@@ -4,7 +4,7 @@
 
 ### Requitisos
 
-1. Si estas en Windows necesitas `Git Bash` o `WSL` para ejecutar los comandos de los siguientes pasos.
+1. Si estas en Windows necesitas [`Git Bash`](https://git-scm.com/download/win) o [`WSL`](https://learn.microsoft.com/es-es/windows/wsl/install) para ejecutar los comandos de los siguientes pasos.
 2. Tener `git` instalado.
 3.  Clonar el repositorio:
 ```shell
