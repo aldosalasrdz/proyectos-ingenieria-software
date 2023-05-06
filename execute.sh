@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Script para ejecutar todos los archivos de python
 start_time=$(date +%s.%N)
@@ -8,10 +8,10 @@ YELLOW='\033[0;33m'
 CYAN='\033[0;36m'
 NC='\033[0m'
 
-for file in $(find fase-1 fase-2 fase-3 -name "*.py"); do
+for file in $(find fase* -name "*.py" | sort -t_ -k2,2n); do
     printf "${BLUE}Running file: ${NC}${file}\n"
     file_start_time=$(date +%s.%N)
-    python3 $file
+    python3 "$file"
     file_end_time=$(date +%s.%N)
     printf "${YELLOW}The file ${file} took $(echo "$file_end_time - $file_start_time" | bc) seconds to execute.${NC}\n\n"
 done
