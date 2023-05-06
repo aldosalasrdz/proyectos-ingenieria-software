@@ -2,23 +2,29 @@
 
 ## Script para ejecutar todos los archivos de Python en orden:
 
-### Requitisos
+### Requisitos
 
-1. Si estas en Windows necesitas [`Git Bash`](https://git-scm.com/download/win) o [`WSL`](https://learn.microsoft.com/es-es/windows/wsl/install) para ejecutar los comandos de los siguientes pasos.
-2. Tener `git` instalado.
-3.  Clonar el repositorio:
+- Si estas en Windows necesitas [`Git Bash`](https://git-scm.com/download/win) o [`WSL`](https://learn.microsoft.com/es-es/windows/wsl/install) para ejecutar los comandos de los siguientes pasos.
+- Tener `git` instalado.
+- Instalar modulos necesarios:
+```shell
+pip install PyPDF2
+```
+
+### Pasos para ejecutar el codigo:
+1.  Clonar el repositorio:
 ```shell
 git clone https://github.com/aldosalasrdz/proyectos-ingenieria-software.git
 ```
-4. Moverse a la carpeta del repositorio:
+2. Moverse a la carpeta del repositorio:
 ```shell
 cd proyectos-ingenieria-software
 ```
-5. Darle permisos de ejecución al archivo:
+3. Darle permisos de ejecución al archivo:
 ```shell
 chmod +x execute.sh
 ```
-6. Ejecutar el script:
+4. Ejecutar el script:
 ```shell
 ./execute.sh
 ```
