@@ -2,7 +2,8 @@
 
 ## Script para ejecutar todos los archivos de Python en orden:
 
-> **Note** El script se cambio para que sea compatible con las actividades 12 y 13.
+> **Note**
+> El script se cambio para que sea compatible con las actividades 12 y 13.
 
 ### Requisitos
 
