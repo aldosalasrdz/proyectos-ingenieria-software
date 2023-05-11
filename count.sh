@@ -3,8 +3,7 @@
 # Script para buscar palabras y que imprime en que archivo se encuentra y
 # cuantas veces aparece
 
-echo "Enter the word you want to search:"
-read word
+read -p "Enter the word you want to search: " word
 
 folder="./NewFiles"
 
