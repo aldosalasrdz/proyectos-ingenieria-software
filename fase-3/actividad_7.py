@@ -77,7 +77,8 @@ with open("log7.txt", "w") as log_file:
         # Por cada palabra en el diccionario
         for word in all_words_dict:
             for file in all_words_dict[word]["files"]:
-                posting_file.write(f"{file};{all_words_dict[word]['RepDic'][file]}\n")
+                filenew = file[:-3]
+                posting_file.write(f"{filenew}html;{all_words_dict[word]['RepDic'][file]}\n")
 
     # Se escribe el dictionary
     with open("dictionary.txt", "w", encoding="utf-8") as dictionary_file:

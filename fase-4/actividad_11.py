@@ -17,7 +17,7 @@ with open("log11.txt", "w") as log_file:
         dic = {}
         List = list()
         for line in PosLines:
-            docNumber = line.split(".txt")
+            docNumber = line.split(".html")
             List.append(docNumber[0])
 
         List = list(dict.fromkeys(List))
@@ -29,18 +29,18 @@ with open("log11.txt", "w") as log_file:
             start_time_read = time.time()
             dic[text] = indexID
             newIndexID = str(indexID).ljust(12)
-            Pos.write(f"{newIndexID}{text}.txt\n")
+            Pos.write(f"{newIndexID}{text}.html\n")
             indexID += 1
             end_time_read = time.time()
             read_time = end_time_read - start_time_read
-            log_file.write(f"{os.path.join(absolute_path, text)}.txt: {read_time}\n")
+            log_file.write(f"{os.path.join(absolute_path, text)}.html: {read_time}\n")
 
         Pos.close()
 
     # Se actualiza el Posting
     with open("newPosting.txt", "w") as PosW:
         for line in PosLines:
-            docNumber = line.split(".txt")
+            docNumber = line.split(".html")
 
             PosW.write(f"{dic[docNumber[0]]}{docNumber[1]}")
 
