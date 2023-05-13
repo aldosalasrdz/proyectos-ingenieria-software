@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Búsqueda de archivos</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+</head>
+  <style>
+    h1,
+    h2,
+    p {
+      text-align: center;
+      margin: 0;
+      padding: 5px;
+    }
+  </style>
+<body>
+    <main class="container">
+    <h1>Search engine</h1>
+    <form action="/">
+        <label for="word">Enter your search:</label>
+        <input type="text" id="word" name="word" required autocomplete="off">
+        <button type="submit">Search</button>
+    </form>
+
+      {% if word %}
+        <h2>Results of: {{ word }}</h2>
+          {% if files %}
+            {% for file, file_path in files %}
+              <p>
+                <a href="{{ url_for('view_file', filename=file_path) }}" target="_blank" rel="noopener noreferrer">
+                  {{ url_for('view_file', filename=file_path, _external=True) }}
+                </a>
+              </p>
+            {% endfor %}
+          {% else %}
+            <p>"{{ word }}" not found</p>
+          {% endif %}
+      {% endif %}
+    </main>
+</body>
+</html>
