@@ -37,7 +37,7 @@ def search():
 
             for i in range(rowPos, (rowPos + rowRep)):
                 fileId = int(PosLines[i].split()[0]) - 1
-                #FileRep = el peso del token
+                # FileRep = el peso del token
                 fileRep = str(PosLines[i].split()[1])
                 file = DocLines[fileId].split()[1]
 
@@ -47,7 +47,7 @@ def search():
 
             files.sort(key=lambda a: a[2], reverse=True)
             files = files[:10]
-            
+
             break
 
     return render_template("index.html", word=word, files=files, sa="sa")
