@@ -25,11 +25,11 @@
       {% if word %}
         <h2>Results of: {{ word }}</h2>
           {% if files %}
-            {% for file, file_path in files %}
+            {% for file, file_path, fileRep in files %}
               <p>
                 <a href="{{ url_for('view_file', filename=file_path) }}" target="_blank" rel="noopener noreferrer">
                   {{ url_for('view_file', filename=file_path, _external=True) }}
-                </a>
+                </a> {{fileRep}}
               </p>
             {% endfor %}
           {% else %}
